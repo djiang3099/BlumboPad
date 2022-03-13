@@ -34,6 +34,7 @@ void initialiseKeypadPins();
 void sleepKeypadPins();
 void goToSleep();
 void disableModules();
+void sleepKeypad();
 
 ISR(PCINT0_vect);
 ISR(TIMER1_COMPA_vect);

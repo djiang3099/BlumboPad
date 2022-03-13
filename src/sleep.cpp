@@ -1,5 +1,6 @@
 #include <Arduino.h>
-#include <sleep.h>
+#include "sleep.h"
+#include "blumbo_keypad.cpp"
 
 /* ***************************************
    CONFIGURE BELOW FOR THE SPECIFIC KEYPAD 
@@ -183,6 +184,15 @@ void goToSleep(){
   // Serial.println("Woken up!");
 }
 
+void sleepKeypad(){
+  // Setup the keypad to wait for any keypress
+    sleepKeypadPins();
+    enablePCInt();
+
+    goToSleep();
+    // initialiseKeypadPins();
+}
+
 void disableModules(){
   int PRTIM4 = 4;
   PRR0 |= _BV(PRTWI) | _BV(PRSPI) | _BV(PRADC);   // Disable I2C, SPI, ADC
@@ -196,7 +206,7 @@ ISR(PCINT0_vect){
   // Does this automatically?
   Serial.print("PCINT! Key pressed | ");
   Serial.println(PCICR);
-  num_keys = 0;
+  num_sec = 0;
 
   disablePCInt();
 }    
