@@ -1,6 +1,5 @@
 #include <Arduino.h>
 #include "sleep.h"
-#include "blumbo_keypad.cpp"
 
 /* ***************************************
    CONFIGURE BELOW FOR THE SPECIFIC KEYPAD 
@@ -24,7 +23,7 @@ boolean toggle0 = 0;
 int counter = 0;
 int num_sec = 0;
 
-int pc_led_pin = 9;
+int pc_led_pin = 16;
 
 // TESTING STUFF
 int num_keys = 0;

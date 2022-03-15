@@ -1,1 +1,0 @@
-// Class to hold the config of a keypad

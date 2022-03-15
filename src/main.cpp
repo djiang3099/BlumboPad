@@ -1,7 +1,10 @@
 #include <Arduino.h>
 // #include <Keypad.h>
 // #include <HID-Project.h>
+#include "keypadLayouts.h"
 #include "sleep.h"
+
+KeypadLayouts layouts;
 
 void setup(){
   Serial.begin(9600);
@@ -11,6 +14,7 @@ void setup(){
   setupKeypad();
 
   num_sec = 0;
+  
   pinMode(ledPin, OUTPUT);
 }
 
@@ -35,60 +39,7 @@ void loop(){
       num_sec = 0;
       // num_keys++;
       Serial.println(key);
-      Keyboard.write(key);
+      layouts.funcArr[0](key);
     }
   }
 }
-
-/*
-void loop() {
-  delay(50);
-  // Partition into sleeping and awake
-  if (num_sec >= 5 && num_keys >= 4){
-    if (awake){
-      Serial.println("Go to sleep");
-      // Simulate sleeping, do nothing
-      awake = false;
-
-      // Setup the keypad to wait for any keypress
-      sleepKeypadPins();
-      enablePCInt();
-
-      goToSleep();
-      initialiseKeypadPins();
-      // detachUSB();
-    }
-  }
-  else{
-    // Simulate awake
-    if (!awake){
-      // Just woken up, reset states 
-      Serial.println("Waking up");
-      num_sec = 0;
-      num_keys = 0;
-      awake = true;
-      // USBDevice.attach();
-    }
-    else{
-      // put your main code here, to run repeatedly:
-      char key = keypad.getKey();
-      delay(50); // overcome any debounce delays built into the keypad library
-      // Serial.print("Looped");
-
-      if (!key){
-        Serial.print("No key");
-        // sleepKeypadPins();
-        // goToSleep();  
-      }
-      else{
-        Serial.print("Got a key | ");
-        Serial.println(PCICR);
-        num_sec = 0;
-        num_keys++;
-        Serial.println(key);
-        Keyboard.write(key);
-      }
-    }
-  }
-}
-*/
