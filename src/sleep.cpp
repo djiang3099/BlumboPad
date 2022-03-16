@@ -18,7 +18,10 @@ char keys[ROWS][COLS] = {
    CONFIGURE ABOVE FOR THE SPECIFIC KEYPAD 
    *************************************** */
 
-const int ledPin = 10;
+boolean cycle = false;
+
+const byte ledPin = 10;
+const byte cyclePin = 9;
 boolean toggle0 = 0;
 int counter = 0;
 int num_sec = 0;
@@ -46,8 +49,11 @@ void setupPCInt(){
   pinMode(pc_led_pin, OUTPUT);
   digitalWrite(pc_led_pin, LOW);
 
-  PCMSK0 |= _BV(PCINT1);   // pin 4
-  PCMSK0 |= _BV(PCINT3);   // pin 5
+  PCMSK0 |= _BV(PCINT1);  // pin 15
+  PCMSK0 |= _BV(PCINT3);  // pin 14
+
+  //////////////////////////////////
+  PCMSK0 |= _BV(PCINT5);  // pin 9 - for debugging cycle button
  
   PCICR |= (1 << PCIE0);  // Disable PCINT
   PCIFR  |= _BV(PCIF0);   // clear any outstanding interrupts
@@ -57,14 +63,16 @@ void enablePCInt(){
   digitalWrite(pc_led_pin, HIGH);
   Serial.print("Enable PCINT: ");
   PCIFR  |= _BV(PCIF0);   // clear any outstanding interrupts
-  PCICR = 1;   // enable pin change interrupts
+  // PCICR = 1;   // enable pin change interrupts
+  PCMSK0 |= _BV(PCINT1) | _BV(PCINT3);
   Serial.println(PCICR, BIN);
 }
 
 void disablePCInt(){
   digitalWrite(pc_led_pin, LOW);
   Serial.print("Disable PCINT: ");
-  PCICR = 0;   // disable pin change interrupts
+  // PCICR = 0;   // disable pin change interrupts
+  PCMSK0 &= ~(_BV(PCINT1) | _BV(PCINT3));
   Serial.println(PCICR, BIN);
 }
 
@@ -201,13 +209,20 @@ void disableModules(){
 
 // Pin change ISR
 ISR(PCINT0_vect){
-  // Key has been pressed, wake up the system
-  // Does this automatically?
-  Serial.print("PCINT! Key pressed | ");
-  Serial.println(PCICR);
-  num_sec = 0;
+  Serial.println(digitalRead(cyclePin) == HIGH);
+  if (digitalRead(cyclePin) == HIGH){
+    // Increment the keypad 
+    cycle = true;
+  }
+  else {
+    // Key has been pressed, wake up the system
+    // Does this automatically?
+    Serial.print("PCINT! Key pressed | ");
+    Serial.println(PCICR);
+    num_sec = 0;
 
-  disablePCInt();
+    disablePCInt();
+  }
 }    
 
 ISR(TIMER1_COMPA_vect){//timer0 interrupt 2kHz toggles pin 8

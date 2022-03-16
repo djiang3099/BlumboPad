@@ -9,7 +9,15 @@
 // #include <HID-Project.h>
 
 KeypadLayouts::KeypadLayouts(){
-  layout_num = 0;
+  layout_idx = 0;
+}
+
+void KeypadLayouts::cycle(){
+  layout_idx = (layout_idx + 1) % num_layouts;
+  Serial.print("Cycle! | ");
+  Serial.println(layout_idx);
+  digitalWrite(led0, layout_idx & 0x01);
+  digitalWrite(led1, layout_idx >> 1 & 0x01);
 }
 
 void key0(char key){
@@ -82,50 +90,95 @@ void key0(char key){
   Keyboard.releaseAll();
 }
 
+void key2(char key){
+  switch (key) {
+    case '1':
+      Keyboard.press('1');
+      break;
+    case '2':
+      Keyboard.press('2');
+      break;
+    case '3':
+      Keyboard.press('3');
+      break;
+    case '4':
+      Keyboard.press('4');
+      break;
+    case '5':
+      Keyboard.press('5');
+      break;
+    case '6':
+      Keyboard.press('6');
+      break;
+    case '7':
+      Keyboard.press('7');
+      break;
+    case '8':
+      Keyboard.press('8');
+      break;
+    case '9':
+      Keyboard.press('9');
+      break;
+    case '0':
+      Keyboard.press('0');
+      break;
+    case '*':
+      Keyboard.press('.');
+      break;
+    case '#':
+      Keyboard.press(KEY_RETURN);
+      break;
+    case 'a':
+      Keyboard.press('+');
+      break;
+    case 'b':
+      Keyboard.press('-');
+      break;
+    case 'c':
+      Keyboard.press('*');
+      break;
+    case 'd':
+      Keyboard.press('/');
+      break;
+  }
+  Keyboard.releaseAll();
+}
+
 void key1(char key){
   switch (key) {
     case '1':
       Keyboard.press(KEY_LEFT_CTRL);
       Keyboard.press('c');
-      Keyboard.releaseAll();
       break;
     case '2':
       Keyboard.press(KEY_LEFT_CTRL);
       Keyboard.press('v');
-      Keyboard.releaseAll();
       break;
     case '3':
       Keyboard.press(KEY_LEFT_CTRL);
       Keyboard.press('x');
-      Keyboard.releaseAll();
       break;
     case '4':
       Keyboard.press(KEY_LEFT_CTRL);
       Keyboard.press('z');
-      Keyboard.releaseAll();
       break;
     case '5':
       Keyboard.press(KEY_LEFT_CTRL);
       Keyboard.press(KEY_BACKSPACE);
-      Keyboard.releaseAll();
       break;
     case '6':
       Keyboard.press(KEY_BACKSPACE);
-      Keyboard.releaseAll();
       break;
     case '7':
       Keyboard.press(KEY_LEFT_CTRL);
       Keyboard.press('y');
-      Keyboard.releaseAll();
       break;
     case '8':
       Keyboard.press(KEY_DELETE);
-      Keyboard.releaseAll();
       break;
     case '9':
       Keyboard.press(KEY_LEFT_CTRL);
       Keyboard.press(KEY_DELETE);
-      Keyboard.releaseAll();
       break;
     case '*':
       Consumer.write(MEDIA_PREVIOUS);
@@ -146,4 +199,5 @@ void key1(char key){
       Consumer.write(MEDIA_PLAY_PAUSE);
       break;
   }
+  Keyboard.releaseAll();
 }

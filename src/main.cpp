@@ -13,13 +13,20 @@ void setup(){
   setupTimer1Int();
   setupKeypad();
 
+
+  // Debugging
   num_sec = 0;
-  
   pinMode(ledPin, OUTPUT);
+  pinMode(cyclePin, INPUT);
 }
 
 void loop(){
-  if (num_sec >= 5){ // If no key has been pressed for >5s
+  if (cycle){ // Cycle has been pressed, PCINT fired
+    cycle = false;
+    layouts.cycle();
+  }
+
+  if (num_sec >= 15){ // If no key has been pressed for >5s
     sleepKeypad();
   }
   else{
@@ -35,11 +42,14 @@ void loop(){
     }
     else{
       Serial.print("Got a key | ");
-      Serial.println(PCICR);
+      Serial.print(key);
+      Serial.print(" | ");
+      Serial.print(layouts.layout_idx);
+      Serial.print(" | ");
+      Serial.println(layouts.names[layouts.layout_idx]);
+
       num_sec = 0;
-      // num_keys++;
-      Serial.println(key);
-      layouts.funcArr[0](key);
+      layouts.funcArr[layouts.layout_idx](key);
     }
   }
 }

@@ -13,7 +13,11 @@
    CONFIGURE KEYPAD FOR THE SPECIFIC KEYPAD IN CPP FILE
    **************************************************** */
 
-extern const int ledPin;
+extern boolean cycle;
+
+extern const byte ledPin;
+extern const byte cyclePin;
+
 extern boolean toggle0;
 extern int counter;
 extern int num_sec;
