@@ -13,7 +13,7 @@ void key2(char);
 
 struct KeypadLayouts{
   static const byte led0 = 8;   // For debugging
-  static const byte led1 = 3;   // For debugging
+  // static const byte led1 = 3;   // For debugging
   uint8_t layout_idx;
   
   /* ******************************************************

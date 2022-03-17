@@ -17,7 +17,7 @@ void KeypadLayouts::cycle(){
   Serial.print("Cycle! | ");
   Serial.println(layout_idx);
   digitalWrite(led0, layout_idx & 0x01);
-  digitalWrite(led1, layout_idx >> 1 & 0x01);
+  // digitalWrite(led1, layout_idx >> 1 & 0x01);
 }
 
 void key0(char key){
