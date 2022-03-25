@@ -4,12 +4,19 @@
 // Import layouts from another file
 #include "keypadLayouts.h"
 
-// #include <Arduino.h>
-// #include <Keypad.h>
-// #include <HID-Project.h>
+// void copyFunc(char){
+//   Keyboard.press(KEY_LEFT_CTRL);
+//   Keyboard.press('c');
+// }
 
-KeypadLayouts::KeypadLayouts(){
+KeyFunc::KeyFunc(char* Name, keyActFunc Func){
+  name = Name;
+  func = Func;
+}
+
+KeypadLayouts::KeypadLayouts(Oled* _oled_){
   layout_idx = 0;
+  _oled = _oled_;
 }
 
 void KeypadLayouts::cycle(){
@@ -17,77 +24,124 @@ void KeypadLayouts::cycle(){
   Serial.print("Cycle! | ");
   Serial.println(layout_idx);
   digitalWrite(led0, layout_idx & 0x01);
-  // digitalWrite(led1, layout_idx >> 1 & 0x01);
+  (this->*displayArr[layout_idx])();
 }
 
 void key0(char key){
   switch (key) {
     case '1':
       Keyboard.press('7');
-      // Keyboard.releaseAll();
       break;
     case '2':
       Keyboard.press('8');
-      // Keyboard.releaseAll();
       break;
     case '3':
       Keyboard.press('9');
-      // Keyboard.releaseAll();
       break;
     case '4':
       Keyboard.press('4');
-      // Keyboard.releaseAll();
       break;
     case '5':
       Keyboard.press('5');
-      // Keyboard.releaseAll();
       break;
     case '6':
       Keyboard.press('6');
-      // Keyboard.releaseAll();
       break;
     case '7':
       Keyboard.press('1');
-      // Keyboard.releaseAll();
       break;
     case '8':
       Keyboard.press('2');
-      // Keyboard.releaseAll();
       break;
     case '9':
       Keyboard.press('3');
-      // Keyboard.releaseAll();
       break;
     case '0':
       Keyboard.press('0');
-      // Keyboard.releaseAll();
       break;
     case '*':
       Keyboard.press('.');
-      // Keyboard.releaseAll();
       break;
     case '#':
       Keyboard.press(KEY_RETURN);
-      // Keyboard.releaseAll();
       break;
     case 'a':
       Keyboard.press('+');
-      // Keyboard.releaseAll();
       break;
     case 'b':
       Keyboard.press('-');
-      // Keyboard.releaseAll();
       break;
     case 'c':
       Keyboard.press('*');
-      // Keyboard.releaseAll();
       break;
     case 'd':
       Keyboard.press('/');
-      // Keyboard.releaseAll();
       break;
   }
   Keyboard.releaseAll();
+}
+
+void KeypadLayouts::display0(){
+  _oled->printTitle("Key0");
+  _oled->addKey("7");
+  _oled->addKey("8");
+  _oled->addKey("9");
+  _oled->addKey("A");
+  _oled->addKey("4");
+  _oled->addKey("5");
+  _oled->addKey("6");
+  _oled->addKey("B");
+  _oled->addKey("1");
+  _oled->addKey("2");
+  _oled->addKey("3");
+  _oled->addKey("C");
+  _oled->addKey("*");
+  _oled->addKey("0");
+  _oled->addKey("#");
+  _oled->addKey("D");
+  _oled->update();
+}
+
+void KeypadLayouts::display1(){
+  _oled->printTitle("Key1");
+  _oled->addKey("1");
+  _oled->addKey("2");
+  _oled->addKey("3");
+  _oled->addKey("A");
+  _oled->addKey("4");
+  _oled->addKey("5");
+  _oled->addKey("6");
+  _oled->addKey("B");
+  _oled->addKey("7");
+  _oled->addKey("8");
+  _oled->addKey("9");
+  _oled->addKey("C");
+  _oled->addKey("*");
+  _oled->addKey("0");
+  _oled->addKey("#");
+  _oled->addKey("D");
+  _oled->update();
+}
+
+void KeypadLayouts::display2(){
+  _oled->printTitle("Key0 Again");
+  _oled->addKey("7");
+  _oled->addKey("8");
+  _oled->addKey("9");
+  _oled->addKey("A");
+  _oled->addKey("4");
+  _oled->addKey("5");
+  _oled->addKey("6");
+  _oled->addKey("B");
+  _oled->addKey("1");
+  _oled->addKey("2");
+  _oled->addKey("3");
+  _oled->addKey("C");
+  _oled->addKey("*");
+  _oled->addKey("0");
+  _oled->addKey("#");
+  _oled->addKey("D");
+  _oled->update();
 }
 
 void key2(char key){

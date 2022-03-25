@@ -202,7 +202,7 @@ void sleepKeypad(){
 
 void disableModules(){
   int PRTIM4 = 4;
-  PRR0 |= _BV(PRTWI) | _BV(PRSPI) | _BV(PRADC);   // Disable I2C, SPI, ADC
+  PRR0 |= _BV(PRSPI) | _BV(PRADC);   // Disable SPI, ADC
   PRR1 |= _BV(PRTIM3) | _BV(PRTIM4) | _BV(PRUSART1);  // Disable timers 3,4 & USART
   ADCSRA = 0; // Disable ADC
 }

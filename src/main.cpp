@@ -1,18 +1,21 @@
 #include <Arduino.h>
-// #include <Keypad.h>
-// #include <HID-Project.h>
+
 #include "keypadLayouts.h"
 #include "sleep.h"
+#include "oled.h"
 
-KeypadLayouts layouts;
+Oled* Blumbo_oled;
+KeypadLayouts* layouts;
 
 void setup(){
   Serial.begin(9600);
+  
+  Blumbo_oled = new Oled;
+  layouts = new KeypadLayouts(Blumbo_oled);
   disableModules();
   setupPCInt();
   setupTimer1Int();
   setupKeypad();
-
 
   // Debugging
   num_sec = 0;
@@ -22,8 +25,10 @@ void setup(){
 
 void loop(){
   if (cycle){ // Cycle has been pressed, PCINT fired
+    delay(50);
     cycle = false;
-    layouts.cycle();
+    layouts->cycle();
+
   }
 
   if (num_sec >= 15){ // If no key has been pressed for >5s
@@ -44,12 +49,12 @@ void loop(){
       Serial.print("Got a key | ");
       Serial.print(key);
       Serial.print(" | ");
-      Serial.print(layouts.layout_idx);
+      // Serial.print(layouts.layout_idx);
       Serial.print(" | ");
-      Serial.println(layouts.names[layouts.layout_idx]);
+      // Serial.println(layouts.names[layouts.layout_idx]);
 
       num_sec = 0;
-      layouts.funcArr[layouts.layout_idx](key);
+      layouts->funcArr[layouts->layout_idx](key);
     }
   }
 }
