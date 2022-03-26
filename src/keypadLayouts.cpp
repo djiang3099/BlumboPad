@@ -27,6 +27,16 @@ void KeypadLayouts::cycle(){
   (this->*displayArr[layout_idx])();
 }
 
+void KeypadLayouts::initOled(){
+  _oled->printTitle(names[layout_idx]);
+  (this->*displayArr[layout_idx])();
+}
+
+void KeypadLayouts::sleepOled(){
+  _oled->display->clearDisplay();
+  _oled->display->display();
+}
+
 void key0(char key){
   switch (key) {
     case '1':

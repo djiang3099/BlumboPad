@@ -33,6 +33,17 @@ struct KeyFunc{
 // static KeyFunc* undo;
 // static KeyFunc* redo;
 
+struct Profiles{
+  // Name of the profile, title to be shown on OLED
+  char* name;
+
+  // Matrix of keys, each with a Func_Name and Func
+  KeyFunc* keys;
+
+  // Method to interpret the Table row for a key press
+  static void readKeys();
+};
+
 struct KeypadLayouts{
   // Function ptr TYPEDEF for OLED displays
   typedef void(KeypadLayouts::*displayFunc)();
@@ -49,7 +60,7 @@ struct KeypadLayouts{
      This needs to be changed when adding/deleting profiles
   ****************************************************** */
   static const uint8_t num_layouts = 3;
-  String names[num_layouts] = {"Calc", "Win", "Mac"};
+  char* names[num_layouts] = {"Calc", "Win", "Mac"};
   layoutFunc funcArr[num_layouts] = {key0, key2, key0};
   displayFunc displayArr[num_layouts] = {&KeypadLayouts::display0, &KeypadLayouts::display1, &KeypadLayouts::display2};
 
@@ -57,6 +68,9 @@ struct KeypadLayouts{
 
   KeypadLayouts(Oled*);
   void cycle();
+
+  void initOled();
+  void sleepOled();
 };
 
 #endif

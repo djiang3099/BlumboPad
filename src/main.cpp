@@ -17,6 +17,8 @@ void setup(){
   setupTimer1Int();
   setupKeypad();
 
+  layouts->initOled();
+
   // Debugging
   num_sec = 0;
   pinMode(ledPin, OUTPUT);
@@ -32,7 +34,14 @@ void loop(){
   }
 
   if (num_sec >= 15){ // If no key has been pressed for >5s
+    // TODO: Disable the OLED before sleeping 
+    layouts->sleepOled();
+
+    // Put system to sleep
     sleepKeypad();
+
+    // TODO: Wake up the OLED again
+    layouts->initOled();
   }
   else{
     // put your main code here, to run repeatedly:
