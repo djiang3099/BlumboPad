@@ -4,6 +4,15 @@
 #include "sleep.h"
 #include "oled.h"
 
+// void setup(){
+//   Serial.begin(9600);
+// }
+
+// void loop(){
+//   Serial.println("Hello");
+//   delay(1000);
+// }
+
 Oled* Blumbo_oled;
 KeypadLayouts* layouts;
 
@@ -14,7 +23,7 @@ void setup(){
   layouts = new KeypadLayouts(Blumbo_oled);
   disableModules();
   setupPCInt();
-  setupTimer1Int();
+  // setupTimer1Int();
   setupKeypad();
 
   layouts->initOled();
@@ -33,16 +42,16 @@ void loop(){
 
   }
 
-  if (num_sec >= 15){ // If no key has been pressed for >5s
-    // TODO: Disable the OLED before sleeping 
-    layouts->sleepOled();
+  // if (num_sec >= 15){ // If no key has been pressed for >5s
+  //   // TODO: Disable the OLED before sleeping 
+  //   layouts->sleepOled();
 
-    // Put system to sleep
-    sleepKeypad();
+  //   // Put system to sleep
+  //   sleepKeypad();
 
-    // TODO: Wake up the OLED again
-    layouts->initOled();
-  }
+  //   // TODO: Wake up the OLED again
+  //   layouts->initOled();
+  // }
   else{
     // put your main code here, to run repeatedly:
     char key = keypad.getKey();
@@ -50,7 +59,7 @@ void loop(){
     // Serial.print("Looped");
 
     if (!key){
-      Serial.print("No key");
+      // Serial.print("No key");
       // sleepKeypadPins();
       // goToSleep();  
     }

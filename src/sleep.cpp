@@ -5,14 +5,14 @@
    CONFIGURE BELOW FOR THE SPECIFIC KEYPAD 
    *************************************** */
 const byte ROWS = 4; //four rows
-const byte COLS = 4; //three columns
-byte rowPins[ROWS] = {14, 15, 18, 19}; //connect to the row pinouts of the keypad
-byte colPins[COLS] = {7, 6, 5, 4}; //connect to the column pinouts of the keypad
+const byte COLS = 5; //three columns
+byte rowPins[ROWS] = {7, 6, 5, 4}; //connect to the row pinouts of the keypad
+byte colPins[COLS] = {19, 18, 15, 14, 16}; //connect to the column pinouts of the keypad
 char keys[ROWS][COLS] = {
-  {'1', '4', '7', '*'},
-  {'2', '5', '8', '0'},
-  {'3', '6', '9', '#'},
-  {'a', 'b', 'c', 'd'}
+  {'00', '01', '02', '03', '04'},
+  {'10', '11', '12', '13', '14'},
+  {'20', '21', '22', '23', '24'},
+  {'30', '31', '32', '33', '34'}
 };
 /* ***************************************
    CONFIGURE ABOVE FOR THE SPECIFIC KEYPAD 
@@ -20,8 +20,8 @@ char keys[ROWS][COLS] = {
 
 boolean cycle = false;
 
-const byte ledPin = 10;
-const byte cyclePin = 9;
+// const byte ledPin = 10;
+// const byte cyclePin = 9;
 boolean toggle0 = 0;
 int counter = 0;
 int num_sec = 0;
@@ -207,49 +207,49 @@ void disableModules(){
   ADCSRA = 0; // Disable ADC
 }
 
-// Pin change ISR
-ISR(PCINT0_vect){
-  Serial.println(digitalRead(cyclePin) == HIGH);
-  if (digitalRead(cyclePin) == HIGH){
-    // Increment the keypad 
-    cycle = true;
-  }
-  else {
-    // Key has been pressed, wake up the system
-    // Does this automatically?
-    Serial.print("PCINT! Key pressed | ");
-    Serial.println(PCICR);
-    num_sec = 0;
+// // Pin change ISR
+// ISR(PCINT0_vect){
+//   Serial.println(digitalRead(cyclePin) == HIGH);
+//   if (digitalRead(cyclePin) == HIGH){
+//     // Increment the keypad 
+//     cycle = true;
+//   }
+//   else {
+//     // Key has been pressed, wake up the system
+//     // Does this automatically?
+//     Serial.print("PCINT! Key pressed | ");
+//     Serial.println(PCICR);
+//     num_sec = 0;
 
-    disablePCInt();
-  }
-}    
+//     disablePCInt();
+//   }
+// }    
 
-ISR(TIMER1_COMPA_vect){//timer0 interrupt 2kHz toggles pin 8
-  // generates pulse wave of frequency 2kHz/2 = 1kHz 
-  // (takes two cycles for full wave- toggle high then toggle low)
-  if(counter < 1984){
-    counter++;
-  }
-  else{
-    counter = 0;
-    num_sec++;
+// ISR(TIMER1_COMPA_vect){//timer0 interrupt 2kHz toggles pin 8
+//   // generates pulse wave of frequency 2kHz/2 = 1kHz 
+//   // (takes two cycles for full wave- toggle high then toggle low)
+//   if(counter < 1984){
+//     counter++;
+//   }
+//   else{
+//     counter = 0;
+//     num_sec++;
 
-    // For DEBUG
-    Serial.print(num_sec);
-    Serial.print(" | ");
-    Serial.print(num_keys);
-    Serial.print(" | ");
-    Serial.print(awake);
-    Serial.print(" | ");
-    Serial.println(PCICR, BIN);
-    if (toggle0){
-      digitalWrite(ledPin,HIGH);
-      toggle0 = 0;
-    }
-    else{
-      digitalWrite(ledPin,LOW);
-      toggle0 = 1;
-    }
-  }
-}
+//     // For DEBUG
+//     Serial.print(num_sec);
+//     Serial.print(" | ");
+//     Serial.print(num_keys);
+//     Serial.print(" | ");
+//     Serial.print(awake);
+//     Serial.print(" | ");
+//     Serial.println(PCICR, BIN);
+//     if (toggle0){
+//       digitalWrite(ledPin,HIGH);
+//       toggle0 = 0;
+//     }
+//     else{
+//       digitalWrite(ledPin,LOW);
+//       toggle0 = 1;
+//     }
+//   }
+// }

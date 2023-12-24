@@ -39,53 +39,65 @@ void KeypadLayouts::sleepOled(){
 
 void key0(char key){
   switch (key) {
-    case '1':
+    case '00':
       Keyboard.press('7');
       break;
-    case '2':
+    case '01':
       Keyboard.press('8');
       break;
-    case '3':
+    case '02':
       Keyboard.press('9');
       break;
-    case '4':
-      Keyboard.press('4');
-      break;
-    case '5':
-      Keyboard.press('5');
-      break;
-    case '6':
-      Keyboard.press('6');
-      break;
-    case '7':
-      Keyboard.press('1');
-      break;
-    case '8':
-      Keyboard.press('2');
-      break;
-    case '9':
-      Keyboard.press('3');
-      break;
-    case '0':
-      Keyboard.press('0');
-      break;
-    case '*':
-      Keyboard.press('.');
-      break;
-    case '#':
-      Keyboard.press(KEY_RETURN);
-      break;
-    case 'a':
+    case '03':
       Keyboard.press('+');
       break;
-    case 'b':
+    case '04':
+      Keyboard.press('A');
+      break;
+    case '10':
+      Keyboard.press('4');
+      break;
+    case '11':
+      Keyboard.press('5');
+      break;
+    case '12':
+      Keyboard.press('6');
+      break;
+    case '13':
       Keyboard.press('-');
       break;
-    case 'c':
+    case '14':
+      Keyboard.press('B');
+      break;
+    case '20':
+      Keyboard.press('1');
+      break;
+    case '21':
+      Keyboard.press('2');
+      break;
+    case '22':
+      Keyboard.press('3');
+      break;
+    case '23':
       Keyboard.press('*');
       break;
-    case 'd':
+    case '24':
+      Keyboard.press('C');
+      break;
+    case '30':
+      Keyboard.press('0');
+      break;
+    case '31':
+      Keyboard.press('.');
+      break;
+    case '32':
       Keyboard.press('/');
+      break;
+    case '33':
+      Keyboard.press(KEY_RETURN);
+      break;
+    case '34':
+      Keyboard.press('D');
       break;
   }
   Keyboard.releaseAll();
