@@ -5,7 +5,7 @@ Oled::Oled(){
   display = new Adafruit_SSD1306(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
   if(!display->begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS)) {
     Serial.println(F("SSD1306 allocation failed")); 
-    for(;;); // Don't proceed, loop forever
+    while(1); // Don't proceed, loop forever
   }
   display->clearDisplay();
   printTitle("BlumboPad v1");

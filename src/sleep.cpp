@@ -19,7 +19,6 @@ uint16_t debounceDelay;
 unsigned long ENC1_lastDebounceTime = 0;
 unsigned long ENC2_lastDebounceTime = 0;
 
-
 const byte ROWS = 4; //four rows
 const byte COLS = 5; //three columns
 byte rowPins[ROWS] = {7, 6, 5, 4}; //connect to the row pinouts of the keypad
@@ -40,6 +39,7 @@ Keypad keypad = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS );
 void setupKeypad(){
   Keyboard.begin();
   Consumer.begin();
+  Mouse.begin();
 }
 
 void initialiseKeypadPins(){

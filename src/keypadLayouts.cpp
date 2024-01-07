@@ -58,9 +58,9 @@ void key0(char key){
     case 4:
       Keyboard.press('+');
       break;
-    case 5: // ENCODER SW17 (Upper one)
-      Keyboard.press(MEDIA_PLAY_PAUSE);
-      break;
+    // case 5: // ENCODER SW17 (Upper one)
+    //   Keyboard.press(MEDIA_PLAY_PAUSE);
+    //   break;
     case 6:
       Keyboard.press('4');
       break;
@@ -74,7 +74,7 @@ void key0(char key){
       Keyboard.press('-');
       break;
     case 10: // ENCODER SW18 (Mid / lower one)
-      Keyboard.press(MEDIA_PLAY_PAUSE);
+      Keyboard.press(KEY_RETURN);
       break;
     case 11:
       Keyboard.press('1');
@@ -106,14 +106,15 @@ void key0(char key){
     case 20:  // LED
       Keyboard.press('D');
       break;
-    case KEY_ENC_CW:
-      Consumer.write(MEDIA_VOL_UP);
+    case KEY_ENC_CW:  // Scroll vertically right
+      Keyboard.press(KEY_LEFT_SHIFT); 
+      Mouse.move(0,0,-5); // 5 seems like a reasonable number...
       break;
-    case KEY_ENC_CCW:
-      Consumer.write(MEDIA_VOL_DOWN);
+    case KEY_ENC_CCW: // Scroll vertically left
+      Keyboard.press(KEY_LEFT_SHIFT);
+      Mouse.move(0,0,5);
       break;
   }
-
   Keyboard.releaseAll();
 }
 

@@ -48,8 +48,7 @@ struct Profiles{
 struct KeypadLayouts{
   // Function ptr TYPEDEF for OLED displays
   typedef void(KeypadLayouts::*displayFunc)();
-  // static const byte led0 = 8;   // For debugging
-  // static const byte led1 = 3;   // For debugging
+
   uint8_t layout_idx;
   // uint8_t debounce_idx;
   Oled* _oled;

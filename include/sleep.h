@@ -21,18 +21,7 @@
    **************************************************** */
 
 extern boolean cycle;
-
-// extern const byte ledPin;
-// extern const byte cyclePin;
-
-// extern boolean toggle0;
-// extern int counter;
-// extern int num_sec;
 extern uint16_t debounceDelay;
-
-// TESTING STUFF
-// extern int num_keys;
-// extern boolean awake;
 
 extern Keypad keypad;
 

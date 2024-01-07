@@ -49,12 +49,7 @@ void loop(){
     }
   }
 
-  if (!key){
-    // Serial.print("No key");
-    // sleepKeypadPins();
-    // goToSleep();  
-  }
-  else{
+  if (key){
     Serial.print("\nGot a key | ");
     Serial.println(key);
     // Serial.print(" | ");
@@ -68,7 +63,7 @@ void loop(){
     }
     else if (key == 20){  // LED button pressed - Using it to cycle encoder speed for now
       Serial.println("Encoder speed change");
-      if (getEncoderDebounce() == 50){
+      if (getEncoderDebounce() == 50){  // 50 or 150 can be changed but seem like good values.
         updateEncoderDebounce(150);
       }
       else{
