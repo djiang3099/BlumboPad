@@ -5,6 +5,7 @@
 #include <Keypad.h>
 #include <HID-Project.h>
 #include "oled.h"
+#include "sleep.h"
 
 // Function ptr TYPEDEF for KEYPAD ENTRY -> KEY ACTION -> Output
 typedef void(*layoutFunc)(char);
@@ -47,30 +48,36 @@ struct Profiles{
 struct KeypadLayouts{
   // Function ptr TYPEDEF for OLED displays
   typedef void(KeypadLayouts::*displayFunc)();
-  static const byte led0 = 8;   // For debugging
+  // static const byte led0 = 8;   // For debugging
   // static const byte led1 = 3;   // For debugging
   uint8_t layout_idx;
+  // uint8_t debounce_idx;
   Oled* _oled;
   
   void display0();
   void display1();
-  void display2();
+  // void display2();
 
   /* ******************************************************
      This needs to be changed when adding/deleting profiles
   ****************************************************** */
-  static const uint8_t num_layouts = 3;
-  char* names[num_layouts] = {"Calc", "Win", "Mac"};
-  layoutFunc funcArr[num_layouts] = {key0, key2, key0};
-  displayFunc displayArr[num_layouts] = {&KeypadLayouts::display0, &KeypadLayouts::display1, &KeypadLayouts::display2};
+  static const uint8_t num_layouts = 2;
+  // static const uint8_t num_debounce = 2;
+  char* names[num_layouts] = {"Calc", "Win"};
+  // int debounceDelayArr[num_debounce] = {50, 150}; // This can be any number to cycle through
+  layoutFunc funcArr[num_layouts] = {key0, key1};
+  displayFunc displayArr[num_layouts] = {&KeypadLayouts::display0, &KeypadLayouts::display1};
+
 
   // TODO: Add array of key function strings (Copy, cut, Ret)
 
   KeypadLayouts(Oled*);
   void cycle();
+  // void cycleEncoder();
 
   void initOled();
   void sleepOled();
+  // int getDebounceDelay();
 };
 
 #endif

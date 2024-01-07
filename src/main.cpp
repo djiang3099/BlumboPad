@@ -4,15 +4,6 @@
 #include "sleep.h"
 #include "oled.h"
 
-// void setup(){
-//   Serial.begin(9600);
-// }
-
-// void loop(){
-//   Serial.println("Hello");
-//   delay(1000);
-// }
-
 Oled* Blumbo_oled;
 KeypadLayouts* layouts;
 
@@ -21,57 +12,71 @@ void setup(){
   
   Blumbo_oled = new Oled;
   layouts = new KeypadLayouts(Blumbo_oled);
-  disableModules();
-  setupPCInt();
+  // disableModules();
+  // setupPCInt();
   // setupTimer1Int();
   setupKeypad();
 
   layouts->initOled();
+  initialiseEncoder(INIT_ENC1_2);
 
-  // Debugging
-  num_sec = 0;
-  pinMode(ledPin, OUTPUT);
-  pinMode(cyclePin, INPUT);
+  // Debugging---
+  // num_sec = 0;
+  // pinMode(ledPin, OUTPUT);
+  // pinMode(cyclePin, INPUT);
+
+  // delay(3000);
+  Serial.println("INITIALISED");
+
 }
 
 void loop(){
-  if (cycle){ // Cycle has been pressed, PCINT fired
-    delay(50);
-    cycle = false;
-    layouts->cycle();
+  // put your main code here, to run repeatedly:
+  char key = keypad.getKey();
+  delay(10); // overcome any debounce delays built into the keypad library
+  // Serial.print("Looped");
 
+  byte enc_state = readEnc2();
+  if (enc_state > 0){
+    Serial.println(getEncCounter(2));
+    if (enc_state == ENC_CW){
+      Serial.println("Vol up");
+      layouts->funcArr[layouts->layout_idx](KEY_ENC_CW);
+    }
+    else if (enc_state == ENC_CCW){
+      Serial.println("Vol dn");
+      layouts->funcArr[layouts->layout_idx](KEY_ENC_CCW);
+    }
   }
 
-  // if (num_sec >= 15){ // If no key has been pressed for >5s
-  //   // TODO: Disable the OLED before sleeping 
-  //   layouts->sleepOled();
-
-  //   // Put system to sleep
-  //   sleepKeypad();
-
-  //   // TODO: Wake up the OLED again
-  //   layouts->initOled();
-  // }
+  if (!key){
+    // Serial.print("No key");
+    // sleepKeypadPins();
+    // goToSleep();  
+  }
   else{
-    // put your main code here, to run repeatedly:
-    char key = keypad.getKey();
-    delay(50); // overcome any debounce delays built into the keypad library
-    // Serial.print("Looped");
+    Serial.print("\nGot a key | ");
+    Serial.println(key);
+    // Serial.print(" | ");
+    // Serial.print(layouts.layout_idx);
+    // Serial.print(" | ");
+    // Serial.println(layouts.names[layouts.layout_idx]);
 
-    if (!key){
-      // Serial.print("No key");
-      // sleepKeypadPins();
-      // goToSleep();  
+    if (key == 15){ // Cycle button pressed
+      Serial.println("Cycle");
+      layouts->cycle();
+    }
+    else if (key == 20){  // LED button pressed - Using it to cycle encoder speed for now
+      Serial.println("Encoder speed change");
+      if (getEncoderDebounce() == 50){
+        updateEncoderDebounce(150);
+      }
+      else{
+        updateEncoderDebounce(50);
+      }
     }
     else{
-      Serial.print("Got a key | ");
-      Serial.print(key);
-      Serial.print(" | ");
-      // Serial.print(layouts.layout_idx);
-      Serial.print(" | ");
-      // Serial.println(layouts.names[layouts.layout_idx]);
-
-      num_sec = 0;
+      // Action the requested key stroke / macro - Defined in keyboardLayouts
       layouts->funcArr[layouts->layout_idx](key);
     }
   }

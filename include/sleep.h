@@ -8,6 +8,13 @@
 
 // number of items in an array
 #define NUMITEMS(arg) ((unsigned int) (sizeof (arg) / sizeof (arg [0])))
+#define INIT_ENC1 1
+#define INIT_ENC2 2
+#define INIT_ENC1_2 0
+#define ENC_CW 1
+#define ENC_CCW 2
+#define KEY_ENC_CW 21
+#define KEY_ENC_CCW 22
 
 /* ****************************************************
    CONFIGURE KEYPAD FOR THE SPECIFIC KEYPAD IN CPP FILE
@@ -15,16 +22,17 @@
 
 extern boolean cycle;
 
-extern const byte ledPin;
-extern const byte cyclePin;
+// extern const byte ledPin;
+// extern const byte cyclePin;
 
-extern boolean toggle0;
-extern int counter;
-extern int num_sec;
+// extern boolean toggle0;
+// extern int counter;
+// extern int num_sec;
+extern uint16_t debounceDelay;
 
 // TESTING STUFF
-extern int num_keys;
-extern boolean awake;
+// extern int num_keys;
+// extern boolean awake;
 
 extern Keypad keypad;
 
@@ -39,6 +47,12 @@ void sleepKeypadPins();
 void goToSleep();
 void disableModules();
 void sleepKeypad();
+void initialiseEncoder(byte);
+uint16_t getEncoderDebounce();
+void updateEncoderDebounce(uint16_t);
+int readEnc1();
+int readEnc2();
+int getEncCounter(byte);
 
 ISR(PCINT0_vect);
 ISR(TIMER1_COMPA_vect);
