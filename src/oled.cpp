@@ -7,6 +7,7 @@ Oled::Oled(){
     Serial.println(F("SSD1306 allocation failed")); 
     while(1); // Don't proceed, loop forever
   }
+  screen_invert = false;
   display->clearDisplay();
   printTitle("BlumboPad v1");
 }
@@ -57,4 +58,17 @@ void Oled::addKey(const char* key){
 
 void Oled::update(){
   display->display();
+}
+
+bool Oled::preventScreenBurn(){
+  if (screen_invert){
+    display->invertDisplay(true);
+    screen_invert = false;
+    return false;
+  }
+  else{
+    display->invertDisplay(false);
+    screen_invert = true;
+    return true;
+  }
 }

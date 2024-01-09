@@ -25,6 +25,7 @@
 
 struct Oled{
   Adafruit_SSD1306* display;
+  bool screen_invert;
 
   Oled();
 
@@ -36,6 +37,8 @@ struct Oled{
   void addKey(const char*);
 
   void update();
+  
+  bool preventScreenBurn();
 } ;
 
 #endif

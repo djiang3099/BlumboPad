@@ -7,6 +7,11 @@
 Oled* Blumbo_oled;
 KeypadLayouts* layouts;
 
+unsigned long long_loop_time;
+unsigned long short_loop_time;
+unsigned long loop_time;
+unsigned long last_loop;
+
 void setup(){
   Serial.begin(9600);
   
@@ -24,13 +29,26 @@ void setup(){
   // num_sec = 0;
   // pinMode(ledPin, OUTPUT);
   // pinMode(cyclePin, INPUT);
+  long_loop_time = 3600000; // 1hr
+  short_loop_time = 60000;  // 1min
+  loop_time = long_loop_time;
+  last_loop = millis();
 
-  // delay(3000);
   Serial.println("INITIALISED");
 
 }
 
 void loop(){
+  if (millis() - last_loop > loop_time) {
+    last_loop = millis();
+    // Invert the screen for a short amount of time
+    if (Blumbo_oled->preventScreenBurn()){
+      loop_time = long_loop_time;
+    }
+    else{
+      loop_time = short_loop_time;
+    }
+  }
   // put your main code here, to run repeatedly:
   char key = keypad.getKey();
   delay(10); // overcome any debounce delays built into the keypad library
