@@ -2,7 +2,7 @@
 // Initiate
 // Cycle through states/keypad layouts
 // Import layouts from another file
-#include "keypadLayouts.h"
+#include "../include/keypadLayouts.h"
 
 // void copyFunc(char){
 //   Keyboard.press(KEY_LEFT_CTRL);
@@ -174,7 +174,7 @@ void key1(char key){
       Keyboard.press(KEY_DELETE);
       break;
     case 10: // ENCODER SW18 (Mid / lower one)
-      Keyboard.press(MEDIA_PLAY_PAUSE);
+      Consumer.write(MEDIA_PLAY_PAUSE);
       break;
     case 11:
       Keyboard.press(KEY_SPACE);

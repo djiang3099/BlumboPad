@@ -1,4 +1,4 @@
-#include "oled.h"
+#include "../include/oled.h"
 
 Oled::Oled(){
   // SSD1306_SWITCHCAPVCC = generate display voltage from 3.3V internally

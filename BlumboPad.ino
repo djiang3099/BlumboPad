@@ -1,8 +1,8 @@
 #include <Arduino.h>
 
-#include "keypadLayouts.h"
-#include "sleep.h"
-#include "oled.h"
+#include "include/keypadLayouts.h"
+#include "include/sleep.h"
+#include "include/oled.h"
 
 Oled* Blumbo_oled;
 KeypadLayouts* layouts;

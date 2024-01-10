@@ -1,6 +1,6 @@
 #include <Arduino.h>
-#include "sleep.h"
-#include "keypadLayouts.h"
+#include "../include/sleep.h"
+#include "../include/keypadLayouts.h"
 
 /* ***************************************
    CONFIGURE BELOW FOR THE SPECIFIC KEYPAD 
