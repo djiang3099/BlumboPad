@@ -1,0 +1,15 @@
+USB(hid) 和蓝牙BLE双向通信DEMO
+
+
+1、使用VISUAL STUDIO （测试环境VS2015） 打开 windows/hidapi.sln
+
+2、编译运行hidtest工程  
+
+
+说明：
+电脑端可能用HIDAPI库或其他HID库开发HID通信应用
+安卓端蓝牙用蓝牙标准API连接BLE设备打开服务ffe0写入FFE1特征值即可。BLE标准规定默认蓝牙包只能传20字节，如果要传输支持的最大长度64要移动端调用 设置MTU大小函数（设置为MTU=67）
+
+安卓端建议使用的调试工具（支持MTU设置）：
+https://wws.lanzoui.com/iS0wJtdw2yf
+
